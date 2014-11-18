@@ -40,9 +40,10 @@ import java.util.Map;
 
 import ac.robinson.dualqrscanner.camera.BitmapLuminanceSource;
 
-class QRImageParser {
+@SuppressWarnings("WeakerAccess")
+public class QRImageParser {
 
-	private static final String TAG = DecoderActivity.class.getSimpleName();
+	private static final String TAG = QRImageParser.class.getSimpleName();
 
 	private static final String CODE_IDENTIFIER = "(sc)?(\\d+)x(\\d+)";
 
@@ -469,8 +470,9 @@ class QRImageParser {
 		// draw the new bitmap
 		// TODO: can older devices cope with loading the entire bitmap in memory?
 		Bitmap correctedBitmap = Bitmap.createBitmap(bitmapWidth, bitmapHeight, bitmap.getConfig());
+		correctedBitmap.eraseColor(Color.TRANSPARENT);
 		Canvas canvas = new Canvas(correctedBitmap);
-		canvas.drawColor(Color.DKGRAY); // TODO do we want to do this?
+		// canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR); // alternative for transparency
 		canvas.drawBitmap(bitmap, imageMatrix, new Paint());
 		bitmap.recycle(); // TODO: note that the original bitmap is now inaccessible
 		return correctedBitmap;
@@ -574,5 +576,19 @@ class QRImageParser {
 		} else {
 			return new PointF((B2 * C1 - B1 * C2) / det, (A1 * C2 - A2 * C1) / det);
 		}
+	}
+
+	@SuppressWarnings("UnusedDeclaration")
+	public static PointF getGridPosition(ImageParameters imageParameters, PointF queryLocation) {
+		int multiplier = imageParameters.mIsInverted ? -1 : 1;
+		float x, y;
+		if (imageParameters.mIsHorizontal) {
+			x = imageParameters.mGridXOrigin + (multiplier * (queryLocation.y * (imageParameters.mGridXScale / 100f)));
+			y = imageParameters.mGridYOrigin - (multiplier * (queryLocation.x * (imageParameters.mGridYScale / 100f)));
+		} else {
+			x = imageParameters.mGridXOrigin + (multiplier * (queryLocation.x * (imageParameters.mGridXScale / 100f)));
+			y = imageParameters.mGridYOrigin + (multiplier * (queryLocation.y * (imageParameters.mGridYScale / 100f)));
+		}
+		return new PointF(x, y);
 	}
 }

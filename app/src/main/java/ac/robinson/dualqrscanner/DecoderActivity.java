@@ -58,7 +58,9 @@ public class DecoderActivity extends ActionBarActivity implements IDecoderActivi
 	private int viewFinderViewId;
 	private int previewViewId;
 	private int imageViewId;
+
 	private boolean resizeImageToView;
+	private boolean shouldScan;
 
 	/**
 	 * This activity handles the backend scanning, recognition and image processing for dual-QR documents.
@@ -73,6 +75,7 @@ public class DecoderActivity extends ActionBarActivity implements IDecoderActivi
 
 		beepManager = new BeepManager(this);
 		resizeImageToView = false;
+		shouldScan = true;
 
 		handler = null;
 		hasSurface = false;
@@ -103,7 +106,9 @@ public class DecoderActivity extends ActionBarActivity implements IDecoderActivi
 	@Override
 	protected void onResume() {
 		super.onResume();
-		startScanning();
+		if (shouldScan) {
+			startScanning();
+		}
 	}
 
 	@Override
@@ -230,6 +235,7 @@ public class DecoderActivity extends ActionBarActivity implements IDecoderActivi
 	private void pictureSucceeded(Bitmap parsedBitmap, ImageParameters imageParameters,
 	                              CodeParameters codeParameters) {
 		stopScanning();
+		shouldScan = false;
 		onPictureCompleted(parsedBitmap, imageParameters, codeParameters);
 	}
 
@@ -273,24 +279,25 @@ public class DecoderActivity extends ActionBarActivity implements IDecoderActivi
 		// So the implementing activity can show a progress message
 	}
 
-	private void showScanner() {
-		viewfinderView.setVisibility(View.VISIBLE);
+	@SuppressWarnings("UnusedDeclaration")
+	protected void requestScanResume() {
+		startScanning();
 	}
 
 	private void startScanning() {
 		// CameraManager must be initialized here, not in onCreate().
+		shouldScan = true;
 		if (cameraManager == null) cameraManager = new CameraManager(getApplication());
 
 		if (viewfinderView == null) {
 			viewfinderView = (ViewfinderView) findViewById(viewFinderViewId);
 			viewfinderView.setCameraManager(cameraManager);
 		}
+		viewfinderView.setVisibility(View.VISIBLE);
 
 		if (imageView == null) {
 			imageView = (ImageView) findViewById(imageViewId);
 		}
-
-		showScanner();
 
 		SurfaceView surfaceView = (SurfaceView) findViewById(previewViewId);
 		SurfaceHolder surfaceHolder = surfaceView.getHolder();
@@ -306,6 +313,7 @@ public class DecoderActivity extends ActionBarActivity implements IDecoderActivi
 				surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
 			}
 		}
+		surfaceView.setVisibility(View.VISIBLE);
 	}
 
 	private void initCamera(SurfaceHolder surfaceHolder) {
@@ -333,11 +341,15 @@ public class DecoderActivity extends ActionBarActivity implements IDecoderActivi
 		}
 
 		cameraManager.closeDriver();
+		if (viewfinderView != null) {
+			viewfinderView.setVisibility(View.GONE);
+		}
 
 		if (!hasSurface) {
 			SurfaceView surfaceView = (SurfaceView) findViewById(previewViewId);
 			SurfaceHolder surfaceHolder = surfaceView.getHolder();
 			surfaceHolder.removeCallback(this);
+			surfaceView.setVisibility(View.GONE);
 		}
 	}
 }
