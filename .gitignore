@@ -6,4 +6,5 @@
 .DS_Store
 /build
 
-app/dualqrscanner-app.iml # Android Studio beta struggles with library projects outside the root directory; the workaround means this file changes every time, so we ignore it
+ # Android Studio beta struggles with library projects outside the root directory; the workaround means this file changes every time, so we ignore it
+app/dualqrscanner-app.iml
