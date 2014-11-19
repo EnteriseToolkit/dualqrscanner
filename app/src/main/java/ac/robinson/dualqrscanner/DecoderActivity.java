@@ -351,10 +351,12 @@ public class DecoderActivity extends ActionBarActivity implements IDecoderActivi
 			viewfinderView.setVisibility(View.GONE);
 		}
 
-		if (!hasSurface) {
-			SurfaceView surfaceView = (SurfaceView) findViewById(previewViewId);
-			SurfaceHolder surfaceHolder = surfaceView.getHolder();
-			surfaceHolder.removeCallback(this);
+		SurfaceView surfaceView = (SurfaceView) findViewById(previewViewId);
+		if (surfaceView != null) {
+			if (!hasSurface) {
+				SurfaceHolder surfaceHolder = surfaceView.getHolder();
+				surfaceHolder.removeCallback(this);
+			}
 			surfaceView.setVisibility(View.GONE);
 		}
 	}
