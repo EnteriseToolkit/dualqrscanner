@@ -54,6 +54,12 @@ final class BeepManager {
 		}
 	}
 
+	void cleanup() {
+		if (mediaPlayer != null) {
+			mediaPlayer.release();
+		}
+	}
+
 	void playBeepSound() {
 		//noinspection ConstantConditions,PointlessBooleanExpression
 		if (PLAY_BEEP && mediaPlayer != null) {

@@ -112,6 +112,12 @@ public class DecoderActivity extends ActionBarActivity implements IDecoderActivi
 	}
 
 	@Override
+	protected void onDestroy() {
+		beepManager.cleanup();
+		super.onDestroy();
+	}
+
+	@Override
 	protected void onPause() {
 		super.onPause();
 		stopScanning();
