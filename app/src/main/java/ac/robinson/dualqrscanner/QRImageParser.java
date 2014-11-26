@@ -541,13 +541,6 @@ public class QRImageParser {
 				"" + (mIsHorizontal ? "horizontal" : "vertical"));
 	}
 
-	private void rotatePoint(PointF point, PointF centre, double cosT, double sinT) {
-		float newX = point.x - centre.x;
-		float newY = point.y - centre.y;
-		point.x = (float) (cosT * newX - sinT * newY) + centre.x;
-		point.y = (float) (sinT * newX + cosT * newY) + centre.y;
-	}
-
 	private double getRotation(PointF p1, PointF p2) {
 		double delta_x = (p1.x - p2.x);
 		double delta_y = (p1.y - p2.y);
@@ -578,8 +571,16 @@ public class QRImageParser {
 		}
 	}
 
+	public static void rotatePoint(PointF point, PointF centre, double cosT, double sinT) {
+		float newX = point.x - centre.x;
+		float newY = point.y - centre.y;
+		point.x = (float) (cosT * newX - sinT * newY) + centre.x;
+		point.y = (float) (sinT * newX + cosT * newY) + centre.y;
+	}
+
 	@SuppressWarnings("UnusedDeclaration")
-	public static PointF getGridPosition(ImageParameters imageParameters, PointF queryLocation) {
+	public static PointF getImagePosition(ImageParameters imageParameters, PointF queryLocation) {
+		// TODO: horizontal is not correct
 		int multiplier = imageParameters.mIsInverted ? -1 : 1;
 		float x, y;
 		if (imageParameters.mIsHorizontal) {
@@ -588,6 +589,21 @@ public class QRImageParser {
 		} else {
 			x = imageParameters.mGridXOrigin + (multiplier * (queryLocation.x * (imageParameters.mGridXScale / 100f)));
 			y = imageParameters.mGridYOrigin + (multiplier * (queryLocation.y * (imageParameters.mGridYScale / 100f)));
+		}
+		return new PointF(x, y);
+	}
+
+	@SuppressWarnings("UnusedDeclaration")
+	public static PointF getGridPosition(ImageParameters imageParameters, PointF gridLocation) {
+		// TODO: horizontal is not correct
+		int multiplier = imageParameters.mIsInverted ? -1 : 1;
+		float x, y;
+		if (imageParameters.mIsHorizontal) {
+			x = (gridLocation.y - imageParameters.mGridXOrigin) / (imageParameters.mGridXScale / 100f) / multiplier;
+			y = (gridLocation.x + imageParameters.mGridYOrigin) / (imageParameters.mGridYScale / 100f) / multiplier;
+		} else {
+			x = (gridLocation.x - imageParameters.mGridXOrigin) / (imageParameters.mGridXScale / 100f) / multiplier;
+			y = (gridLocation.y - imageParameters.mGridYOrigin) / (imageParameters.mGridYScale / 100f) / multiplier;
 		}
 		return new PointF(x, y);
 	}

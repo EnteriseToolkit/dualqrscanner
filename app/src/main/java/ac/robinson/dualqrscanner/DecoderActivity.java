@@ -32,7 +32,6 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.ImageView;
 
 import com.google.zxing.Result;
 
@@ -52,7 +51,7 @@ public class DecoderActivity extends ActionBarActivity implements IDecoderActivi
 	private boolean hasSurface = false;
 	private final String characterSet = null;
 	private Result[] savedMultipleBarcodeResult;
-	private ImageView imageView;
+	private View imageView;
 	private BeepManager beepManager;
 
 	private int viewFinderViewId;
@@ -229,7 +228,12 @@ public class DecoderActivity extends ActionBarActivity implements IDecoderActivi
 	}
 
 	private void pictureFailed() {
-		handler.sendEmptyMessage(DecoderActivityHandler.MSG_RESTART_PREVIEW);
+		//noinspection StatementWithEmptyBody
+		if (handler != null) {
+			handler.sendEmptyMessage(DecoderActivityHandler.MSG_RESTART_PREVIEW);
+		} else {
+			// TODO: the activity is probably finishing - is there anything we can do?
+		}
 		onPictureError();
 	}
 
@@ -302,7 +306,7 @@ public class DecoderActivity extends ActionBarActivity implements IDecoderActivi
 		viewfinderView.setVisibility(View.VISIBLE);
 
 		if (imageView == null) {
-			imageView = (ImageView) findViewById(imageViewId);
+			imageView = findViewById(imageViewId);
 		}
 
 		SurfaceView surfaceView = (SurfaceView) findViewById(previewViewId);

@@ -58,6 +58,7 @@ final class BeepManager {
 		if (mediaPlayer != null) {
 			mediaPlayer.release();
 		}
+		mediaPlayer = null;
 	}
 
 	void playBeepSound() {

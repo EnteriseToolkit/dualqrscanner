@@ -84,6 +84,10 @@ public final class ViewfinderView extends View {
 	@SuppressLint("DrawAllocation")
 	@Override
 	public void onDraw(Canvas canvas) {
+		if (isInEditMode()) {
+			return; // so the visual editor can render this view
+		}
+
 		Rect frame = cameraManager.getFramingRect();
 		if (frame == null) {
 			return;
