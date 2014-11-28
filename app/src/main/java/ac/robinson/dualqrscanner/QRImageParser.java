@@ -580,7 +580,6 @@ public class QRImageParser {
 
 	@SuppressWarnings("UnusedDeclaration")
 	public static PointF getImagePosition(ImageParameters imageParameters, PointF queryLocation) {
-		// TODO: horizontal is not correct
 		int multiplier = imageParameters.mIsInverted ? -1 : 1;
 		float x, y;
 		if (imageParameters.mIsHorizontal) {
@@ -595,12 +594,11 @@ public class QRImageParser {
 
 	@SuppressWarnings("UnusedDeclaration")
 	public static PointF getGridPosition(ImageParameters imageParameters, PointF gridLocation) {
-		// TODO: horizontal is not correct
 		int multiplier = imageParameters.mIsInverted ? -1 : 1;
 		float x, y;
 		if (imageParameters.mIsHorizontal) {
-			x = (gridLocation.y - imageParameters.mGridXOrigin) / (imageParameters.mGridXScale / 100f) / multiplier;
-			y = (gridLocation.x + imageParameters.mGridYOrigin) / (imageParameters.mGridYScale / 100f) / multiplier;
+			x = (imageParameters.mGridYOrigin - gridLocation.y) / (imageParameters.mGridYScale / 100f) / multiplier;
+			y = (gridLocation.x - imageParameters.mGridXOrigin) / (imageParameters.mGridXScale / 100f) / multiplier;
 		} else {
 			x = (gridLocation.x - imageParameters.mGridXOrigin) / (imageParameters.mGridXScale / 100f) / multiplier;
 			y = (gridLocation.y - imageParameters.mGridYOrigin) / (imageParameters.mGridYScale / 100f) / multiplier;
