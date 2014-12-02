@@ -54,7 +54,7 @@ final class DecodeThread extends Thread {
 
 	public static Map<DecodeHintType, Object> getQRReaderHints() {
 		Map<DecodeHintType, Object> hints;
-		hints = new EnumMap<DecodeHintType, Object>(DecodeHintType.class);
+		hints = new EnumMap<>(DecodeHintType.class);
 		Collection<BarcodeFormat> decodeFormats = EnumSet.noneOf(BarcodeFormat.class);
 		decodeFormats.addAll(EnumSet.of(BarcodeFormat.QR_CODE));
 		hints.put(DecodeHintType.POSSIBLE_FORMATS, decodeFormats);

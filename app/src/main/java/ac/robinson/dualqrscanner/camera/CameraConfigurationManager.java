@@ -88,7 +88,7 @@ final class CameraConfigurationManager {
 
 	private static List<Camera.Size> sortSizes(List<Camera.Size> rawSupportedSizes) {
 		// Sort by size, descending
-		List<Camera.Size> supportedPreviewSizes = new ArrayList<Camera.Size>(rawSupportedSizes);
+		List<Camera.Size> supportedPreviewSizes = new ArrayList<>(rawSupportedSizes);
 		Collections.sort(supportedPreviewSizes, new Comparator<Camera.Size>() {
 			@Override
 			public int compare(Camera.Size a, Camera.Size b) {

@@ -62,7 +62,7 @@ public final class ViewfinderView extends View {
 		resultPointColor = Color.WHITE;
 		paint = new Paint(Paint.ANTI_ALIAS_FLAG);
 		paint.setColor(resultPointColor);
-		possibleResultPoints = new ArrayList<ResultPoint>(5);
+		possibleResultPoints = new ArrayList<>(5);
 		lastPossibleResultPoints = null;
 
 		// as in decoder, need to flip x/y values (e.g., width - x; height - y) in 180/270 rotations
@@ -107,7 +107,7 @@ public final class ViewfinderView extends View {
 		if (currentPossible.isEmpty()) {
 			lastPossibleResultPoints = null;
 		} else {
-			possibleResultPoints = new ArrayList<ResultPoint>(5);
+			possibleResultPoints = new ArrayList<>(5);
 			lastPossibleResultPoints = currentPossible;
 			paint.setAlpha(CURRENT_POINT_OPACITY);
 			//noinspection SynchronizationOnLocalVariableOrMethodParameter
