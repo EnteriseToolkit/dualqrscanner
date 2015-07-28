@@ -121,7 +121,7 @@ public final class DecoderActivityHandler extends Handler {
 		removeMessages(MSG_PICTURE);
 	}
 
-	void restartPreviewAndDecode() {
+	private void restartPreviewAndDecode() {
 		if (state == State.SUCCESS) {
 			state = State.PREVIEW;
 			cameraManager.requestPreviewFrame(decodeThread.getHandler(), MSG_DECODE);

@@ -56,7 +56,11 @@ final class DecodeHandler extends Handler {
 				break;
 			case DecoderActivityHandler.MSG_QUIT:
 				running = false;
-				Looper.myLooper().quit();
+				try {
+					//noinspection ConstantConditions
+					Looper.myLooper().quit();
+				} catch (NullPointerException ignored) {
+				}
 				break;
 		}
 	}

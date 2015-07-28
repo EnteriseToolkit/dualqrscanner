@@ -23,8 +23,6 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.util.Log;
 
-import java.io.IOException;
-
 /**
  * Manages beeps for {@link DecoderActivity}.
  */
@@ -44,7 +42,7 @@ final class BeepManager {
 		initialise();
 	}
 
-	void initialise() {
+	private void initialise() {
 		//noinspection ConstantConditions,PointlessBooleanExpression
 		if (PLAY_BEEP && mediaPlayer == null) {
 			// The volume on STREAM_SYSTEM is not adjustable, and users found it too loud,
@@ -82,9 +80,6 @@ final class BeepManager {
 			file.close();
 			mediaPlayer.setVolume(BEEP_VOLUME, BEEP_VOLUME);
 			mediaPlayer.prepare();
-		} catch (IOException ioe) {
-			Log.w(TAG, ioe);
-			mediaPlayer = null;
 		} catch (Throwable t) {
 			Log.w(TAG, t);
 			mediaPlayer = null;

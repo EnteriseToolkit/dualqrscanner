@@ -69,11 +69,11 @@ public class QRImageParser {
 	private final Map<DecodeHintType, Object> readerHints;
 
 	public interface ImageParserCallback {
-		public void pictureFailed();
+		void pictureFailed();
 
-		public void pageIdentified(String pageId);
+		void pageIdentified(String pageId);
 
-		public void pictureSucceeded(Bitmap result, ImageParameters imageParameters, CodeParameters codeParameters);
+		void pictureSucceeded(Bitmap result, ImageParameters imageParameters, CodeParameters codeParameters);
 	}
 
 	public QRImageParser(ImageParserCallback callback) {

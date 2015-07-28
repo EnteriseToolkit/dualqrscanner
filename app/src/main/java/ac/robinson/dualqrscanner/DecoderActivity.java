@@ -25,7 +25,7 @@ import android.hardware.Camera;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.SurfaceHolder;
@@ -41,7 +41,7 @@ import ac.robinson.dualqrscanner.camera.CameraManager;
 import ac.robinson.dualqrscanner.camera.CameraUtilities;
 
 @SuppressLint("Registered")
-public class DecoderActivity extends ActionBarActivity implements IDecoderActivity, SurfaceHolder.Callback {
+public class DecoderActivity extends AppCompatActivity implements IDecoderActivity, SurfaceHolder.Callback {
 
 	private static final String TAG = DecoderActivity.class.getSimpleName();
 
@@ -217,8 +217,8 @@ public class DecoderActivity extends ActionBarActivity implements IDecoderActivi
 			}
 
 			@Override
-			public void pictureSucceeded(Bitmap result, ImageParameters imageParameters,
-			                             CodeParameters codeParameters) {
+			public void pictureSucceeded(Bitmap result, ImageParameters imageParameters, CodeParameters
+					codeParameters) {
 				DecoderActivity.this.pictureSucceeded(result, imageParameters, codeParameters);
 			}
 		});
@@ -242,8 +242,8 @@ public class DecoderActivity extends ActionBarActivity implements IDecoderActivi
 		onPageIdFound(pageId);
 	}
 
-	private void pictureSucceeded(Bitmap parsedBitmap, ImageParameters imageParameters,
-	                              CodeParameters codeParameters) {
+	private void pictureSucceeded(Bitmap parsedBitmap, ImageParameters imageParameters, CodeParameters
+			codeParameters) {
 		stopScanning();
 		shouldScan = false;
 		onPictureCompleted(parsedBitmap, imageParameters, codeParameters);
@@ -284,8 +284,8 @@ public class DecoderActivity extends ActionBarActivity implements IDecoderActivi
 	 * @param codeParameters  the parameters of the QR codes (used for applications that need scale sizes etc)
 	 */
 	@SuppressWarnings({"WeakerAccess", "UnusedParameters", "EmptyMethod"})
-	protected void onPictureCompleted(Bitmap parsedBitmap, ImageParameters imageParameters,
-	                                  CodeParameters codeParameters) {
+	protected void onPictureCompleted(Bitmap parsedBitmap, ImageParameters imageParameters, CodeParameters
+			codeParameters) {
 		// So the implementing activity can show a progress message
 	}
 

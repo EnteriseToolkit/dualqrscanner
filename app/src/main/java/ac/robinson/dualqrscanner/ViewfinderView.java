@@ -95,6 +95,9 @@ public final class ViewfinderView extends View {
 
 		// Draw the result points
 		Rect previewFrame = cameraManager.getFramingRectInPreview();
+		if (previewFrame == null) {
+			return;
+		}
 		float scaleX = frame.width() / (float) previewFrame.width();
 		float scaleY = frame.height() / (float) previewFrame.height();
 

@@ -24,14 +24,14 @@ import ac.robinson.dualqrscanner.camera.CameraManager;
 
 interface IDecoderActivity {
 
-	public ViewfinderView getViewfinder();
+	ViewfinderView getViewfinder();
 
-	public Handler getHandler();
+	Handler getHandler();
 
-	public CameraManager getCameraManager();
+	CameraManager getCameraManager();
 
-	public void handlePreviewDecode(Result[] rawResults);
+	void handlePreviewDecode(Result[] rawResults);
 
 	@SuppressWarnings("UnusedParameters")
-	public void handlePictureDecode(byte[] data, int width, int height);
+	void handlePictureDecode(byte[] data, int width, int height);
 }
