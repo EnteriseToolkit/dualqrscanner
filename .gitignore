@@ -8,4 +8,4 @@
 
  # Android Studio struggles with library projects outside the root directory; the workaround means these files change every time, so we ignore them
 
-app/dualqrscanner-app.iml
+app/dualqrscanner.iml
